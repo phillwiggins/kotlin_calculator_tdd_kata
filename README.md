@@ -1,6 +1,6 @@
 # Kotlin Calculator Kata
 
-![](screenshot.PNG)
+![](https://github.com/phillwiggins/kotlin_tdd_kata_calculator/blob/master/screenshot.png)
 
 ## Installation
 
