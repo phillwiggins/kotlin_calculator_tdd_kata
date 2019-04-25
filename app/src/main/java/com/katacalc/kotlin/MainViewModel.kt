@@ -9,24 +9,56 @@ class MainViewModel : ViewModel() {
     private var formula: MutableLiveData<String> = MutableLiveData()
     private var result: MutableLiveData<String> = MutableLiveData()
 
+    private var builtFormula: String? = null
+
     fun getFormula(): LiveData<String> = formula
 
     fun getResult(): LiveData<String> = result
 
     fun operatorPressed(operation: String) {
-        // TODO
+
+        builtFormula = if (builtFormula == null) {
+            operation
+        } else {
+            builtFormula + operation
+        }
+
+        updateFormulaDisplay()
     }
 
     fun numberPressed(number: Int) {
-        formula.value = "$number"
-        result.value = "$number"
+
+        builtFormula = if (builtFormula == null) {
+            "$number"
+        } else {
+            builtFormula + "$number"
+        }
+
+        updateFormulaDisplay()
     }
 
     fun handleEquals() {
-        // TODO
+        updateResultDisplay()
     }
 
     fun handleClear() {
-        // TODO
+        builtFormula = ""
+        updateFormulaDisplay()
+    }
+
+    fun updateFormulaDisplay() {
+        formula.value = builtFormula
+    }
+
+    fun updateResultDisplay() {
+
+        if (builtFormula?.length < 2)
+        result.value = builtFormula ?: "0"
+
+        val parts = builtFormula?.split("+")
+        val left = parts?.get(0)?.toInt() ?: 0
+        val right = parts?.get(1)?.toInt() ?: 0
+
+        result.value = (left + right).toString()
     }
 }
