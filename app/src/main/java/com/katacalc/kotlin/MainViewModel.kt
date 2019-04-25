@@ -46,14 +46,21 @@ class MainViewModel : ViewModel() {
         updateFormulaDisplay()
     }
 
-    fun updateFormulaDisplay() {
+    private fun updateFormulaDisplay() {
         formula.value = builtFormula
     }
 
-    fun updateResultDisplay() {
+    private fun updateResultDisplay() {
 
-        if (builtFormula?.length < 2)
-        result.value = builtFormula ?: "0"
+        if (builtFormula == null) {
+            result.value = "0"
+            return
+        }
+
+        if (builtFormula!!.length < 2) {
+            result.value = builtFormula
+            return
+        }
 
         val parts = builtFormula?.split("+")
         val left = parts?.get(0)?.toInt() ?: 0
